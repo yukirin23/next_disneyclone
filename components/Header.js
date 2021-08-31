@@ -5,7 +5,7 @@ import {
   PlusIcon,
   StarIcon,
 } from "@heroicons/react/solid";
-import { signIn } from "next-auth/client";
+import { getSession, signIn, signOut, useSession } from "next-auth/client";
 import { useRouter } from "next/router";
 
 function Header() {
@@ -21,7 +21,7 @@ function Header() {
         className="cursor-pointer"
         onClick={() => router.push("/")}
       />
-        {!session && (
+        {session && (
           <div className="hidden ml-10 md:flex items-center space-x-6">
             <a className="header-link group">
               <HomeIcon className="h-4" />
@@ -61,14 +61,12 @@ function Header() {
               src={session.user.image} 
               alt=""
               className="ml-auto h-12 w-12 rounded-full object-cover cursor-pointer"
+              onClick={signOut}
             />
-        )};
-      
-       
-      
-      
+        )}      
     </header>
   );
 }
 
 export default Header;
+
